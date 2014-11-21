@@ -10,7 +10,7 @@ public class user {
 	private ArrayList<Integer> points = new ArrayList<Integer>();
 	private currentQuiz = new Quiz();
 	private int setupStep;
-
+	
 	//Set and Get Methods
 	public int getNumber() {
 		return number;
@@ -28,7 +28,10 @@ public class user {
 		return points;
 	}
 	public int getLevel(int x) {
-		return points.get(0);
+		if(x>points.size()) {
+			return 0;
+		}
+		return points.get(x);
 	}
 	public void levelUp(int x){
 		points.set(x, points.get(x)+1);
