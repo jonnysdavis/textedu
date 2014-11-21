@@ -10,6 +10,13 @@ public class user {
 	private ArrayList<Integer> points = new ArrayList<Integer>();
 	private currentQuiz = new Quiz();
 	private int setupStep;
+	public user(int i, String newname) {
+		number = 1;
+		name = newname;
+	}
+	
+	
+	
 	
 	//Set and Get Methods
 	public int getNumber() {
