@@ -1,4 +1,4 @@
-package textedu.trunk;
+package textedu;
 
 import org.junit.* ;
 
