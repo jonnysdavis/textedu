@@ -12,32 +12,37 @@ public class messageHandler {
 	static String msg = "";
 	static HashMap<String, user> userMap = new HashMap<String, user>();
 	
+
+	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		scanInput = new Scanner(System.in);
 		
 		while(!msg.equalsIgnoreCase("-1")) {
-		System.out.print("#: ");
+		System.out.print("--------------------\n#: ");
 		phonenum = scanInput.nextLine();
 		System.out.print("Message: ");
 		msg = scanInput.nextLine();
+		System.out.println();
 		
 		if(newUser(phonenum)){
 			userMap.put(phonenum, new user(phonenum));
 			System.out.println("Intro. Pick a username");
-			continue;
 		}
 		
 		//If the user has no name but exists, they must be responding with their desired name
 		else if(userMap.get(phonenum).getName().equalsIgnoreCase("NewUser")) {
 			if(uniqueName(msg)) {
 				userMap.get(phonenum).setName(msg);
-				System.out.println(msg + ", welcome to textedu");
+				System.out.println(msg + ", welcome to textedu. Instructions.");
 			}
 			else {
 				System.out.println(msg + " is taken. Please choose another username.");
 			}
-			continue;
+		}
+		
+		else if(msg.equalsIgnoreCase("?") || msg.equalsIgnoreCase("help")) {
+			System.out.println(getHelp());
 		}
 		}
 		
@@ -48,6 +53,9 @@ public class messageHandler {
 			return false;
 		}
 		return true;
+	}
+	private static String getHelp() {
+		return "Instructions.";
 	}
 	
 	private static boolean uniqueName(String name) {
