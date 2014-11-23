@@ -24,6 +24,9 @@ public class MessageHandler {
 		System.out.print("Message: ");
 		txtmsg = scanInput.nextLine();
 		System.out.println();
+		if(txtmsg.equalsIgnoreCase("printmap")) {
+			System.out.println(userMap);
+		}else
 		System.out.println(getText(phonenum, txtmsg));
 		}
 	}

@@ -2,7 +2,8 @@ package textedu;
 
 import java.util.ArrayList;
 
-public class User {
+public class User implements java.io.Serializable{
+	
 	private String number;
 	private String name;
 	private boolean hasName = false;
@@ -17,13 +18,18 @@ public class User {
 	public User(String num) {
 		number = num;
 		name = "NewUser";
+		points.add(0);
+		points.add(0);
+		points.add(0);
+		points.add(0);
+		points.add(0);
 	}
 	public String toString() {
-		return number + "," + name + "," + hasName + "," + inbound + "," + outbound;
+		return number + "," + name + "," + hasName + "," + inbound + "," + outbound + "," + points;
 	}
 	
 	
-	// Point related methods
+	//Point related methods
 	public void addPoints(Integer category, Integer toAdd) {
 		//Add to rolling total of all points, then update category
 		points.set(0, (toAdd + points.get(0)));
