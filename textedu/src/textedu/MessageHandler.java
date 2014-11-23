@@ -6,32 +6,11 @@ import java.util.Map.Entry;
 
 
 public class MessageHandler {
-
-	private static Scanner scanInput;
 	static String phonenum;
 	static String txtmsg = "";
 	static HashMap<String, User> userMap = new HashMap<String, User>();
 	
-
-	
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		scanInput = new Scanner(System.in);
-		
-		while(true) {
-		System.out.print("--------------------\n#: ");
-		phonenum = scanInput.nextLine();
-		System.out.print("Message: ");
-		txtmsg = scanInput.nextLine();
-		System.out.println();
-		if(txtmsg.equalsIgnoreCase("printmap")) {
-			System.out.println(userMap);
-		}else
-		System.out.println(getText(phonenum, txtmsg));
-		}
-	}
-	
-	public static String getText(String phonenum, String txtmsg) {
+	public String getText(String phonenum, String txtmsg) {
 		String txtMsgLowercase = txtmsg.toLowerCase();
 		User currentUser = new User("1");
 		String toReturn = "No Response";
@@ -62,7 +41,6 @@ public class MessageHandler {
 		//Add sent and recieved texts to user arraylist
 		currentUser.newInbound(txtmsg);
 		currentUser.newOutbound(toReturn);
-		
 		return toReturn;
 		}
 
