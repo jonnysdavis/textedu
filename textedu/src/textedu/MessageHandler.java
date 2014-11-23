@@ -31,32 +31,36 @@ public class MessageHandler {
 	public static String getText(String phonenum, String txtmsg) {
 		String txtMsgLowercase = txtmsg.toLowerCase();
 		User currentUser = new User("1");
+		String toReturn = "No Response";
 		if(userMap.containsKey(phonenum)) {
 			currentUser = userMap.get(phonenum);
 		}
 		if(newUser(phonenum)){
 			userMap.put(phonenum, new User(phonenum));
-			return("Intro. Pick a username");
+			toReturn = "Intro. Pick a username";
 		}
 		//If the user has no name but exists, they must be responding with their desired name
-		else if(userMap.get(phonenum).getName().equalsIgnoreCase("NewUser")) {
+		else if(currentUser.getName().equalsIgnoreCase("NewUser")) {
 			if(uniqueName(txtmsg)) {
-				userMap.get(phonenum).setName(txtmsg);
-				return(txtmsg + ", welcome to textedu. Instructions.");
+				currentUser.setName(txtmsg);
+				toReturn = (txtmsg + ", welcome to textedu. Instructions.");
 			}
 			else {
-				return(txtmsg + " is taken. Please choose another username.");
+				toReturn = (txtmsg + " is taken. Please choose another username.");
 			}
 		}
 		else if(txtmsg.equalsIgnoreCase("?") || txtmsg.equalsIgnoreCase("help")) {
-			return(getHelp());
+			toReturn = (getHelp());
 		}
 		//NEED TO EXPAND: points msg always respond with all points
 		else if(txtMsgLowercase.contains("points")) {
-			return currentUser.getPoints().toString();
+			toReturn =  currentUser.getPoints().toString();
 		}
+		//Add sent and recieved texts to user arraylist
+		currentUser.newInbound(txtmsg);
+		currentUser.newOutbound(toReturn);
 		
-		return "No Response";
+		return toReturn;
 		}
 
 	private static boolean newUser(String number) {

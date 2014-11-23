@@ -11,22 +11,43 @@ public class User {
 	
 	//Holds users points, each spot being a different category.
 	//Points awarded based on how you score on a quiz
+	//The 0th index is their total points
 	private ArrayList<Integer> points = new ArrayList<Integer>();
 	//private currentQuiz = new Quiz
-	public User(String number) {
-		number = number;
+	public User(String num) {
+		number = num;
 		name = "NewUser";
 	}
-	
+	public String toString() {
+		return number + "," + name + "," + hasName + "," + inbound + "," + outbound;
+	}
 	
 	
 	// Point related methods
 	public void addPoints(Integer category, Integer toAdd) {
+		//Add to rolling total of all points, then update category
+		points.set(0, (toAdd + points.get(0)));
 		points.set(category, (toAdd + points.get(category)));
 	}
 
 	public int getPoints(Integer category) {
 		return points.get(category);
+	}
+	// Currently holds all messages, will be a memory issue at scale!
+	public void newInbound(String msg) {
+		inbound.add(msg);
+	}
+
+	public void newOutbound(String msg) {
+		outbound.add(msg);
+	}
+	//Get the most recent sent and recieved messages
+	public String getLastSent() {
+		return outbound.get(outbound.size());
+	}
+
+	public String getLastRecived() {
+		return inbound.get(inbound.size());
 	}
 	// Set and Get Methods
 	public String getNumber() {
@@ -47,7 +68,7 @@ public class User {
 	public ArrayList getPoints() {
 		return points;
 	}
-	public int getLevel(int x) {
+	public int getPoints(int x) {
 		if(x>points.size()) {
 			return 0;
 		}
