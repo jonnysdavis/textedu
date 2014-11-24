@@ -9,7 +9,7 @@ public class User implements java.io.Serializable{
 	private boolean hasName = false;
 	private ArrayList<String> inbound = new ArrayList<String>();
 	private ArrayList<String> outbound = new ArrayList<String>();
-	
+	boolean changedSinceLastSave = true;
 	//Holds users points, each spot being a different category.
 	//Points awarded based on how you score on a quiz
 	//The 0th index is their total points
