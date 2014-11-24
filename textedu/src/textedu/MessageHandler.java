@@ -9,6 +9,7 @@ public class MessageHandler {
 	static String phonenum;
 	static String txtmsg = "";
 	static HashMap<String, User> userMap = new HashMap<String, User>();
+	LeaderBoard highScores = new LeaderBoard();
 	
 	public String getText(String phonenum, String txtmsg) {
 		String txtMsgLowercase = txtmsg.toLowerCase();
@@ -65,5 +66,8 @@ public class MessageHandler {
            }
         }
         return true;
+	}
+	public void insertUser(User toAdd) {
+		userMap.put(toAdd.getNumber(), toAdd);
 	}
 }
