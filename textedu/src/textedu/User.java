@@ -10,6 +10,7 @@ public class User implements java.io.Serializable{
 	private ArrayList<String> inbound = new ArrayList<String>();
 	private ArrayList<String> outbound = new ArrayList<String>();
 	boolean changedSinceLastSave = true;
+	private String lastSave = "none";
 	//Holds users points, each spot being a different category.
 	//Points awarded based on how you score on a quiz
 	//The 0th index is their total points
@@ -71,13 +72,23 @@ public class User implements java.io.Serializable{
 	public void setName(String name) {
 		this.name = name;
 	}
+
 	public ArrayList getPoints() {
 		return points;
 	}
+
 	public int getPoints(int x) {
-		if(x>points.size()) {
+		if (x > points.size()) {
 			return 0;
 		}
 		return points.get(x);
+	}
+
+	public String getLastSave() {
+		return lastSave;
+	}
+
+	public void setLastSave(String temp) {
+		lastSave = temp;
 	}
 }

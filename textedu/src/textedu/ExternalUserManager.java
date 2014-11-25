@@ -17,11 +17,15 @@ public class ExternalUserManager {
 	static ObjectInputStream ois;
 	
 	public static void saveUser(User toSave) throws IOException {
+		//Only save if the user has changed
+		if(!toSave.getLastSave().equals(toSave.toString())) {
+		toSave.setLastSave(toSave.toString());
 		String filename = toSave.getNumber();
 		fout = new FileOutputStream("UserExports/" + filename);
 		oos = new ObjectOutputStream(fout);
 		oos.writeObject(toSave);
 		fout.close();
+		}
 	}
 	public static void saveAllUsers(HashMap<String, User> toSave) throws IOException {
 		//Iterate through all users, check if the name is taken
