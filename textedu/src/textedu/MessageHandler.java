@@ -4,69 +4,90 @@ import java.util.HashMap;
 import java.util.Scanner;
 import java.util.Map.Entry;
 
-
 public class MessageHandler {
-	static String phonenum;
-	static String txtmsg = "";
-	static HashMap<String, User> userMap = new HashMap<String, User>();
+	private String phonenum = "";
+	private String txtmsg = "";
+	private String name = "NewUser";
+	HashMap<String, User> userMap = new HashMap<String, User>();
 	LeaderBoard highScores = new LeaderBoard();
-	
+	User currentUser = new User("0");
+	String toReturn = "No Response";
+	// Inbound = Texts from the user TO textedu
+	// Outbound = Texts from textedu TO the user
+	String lastInbound = "", lastOutbound = "", lastLastInbound = "",
+			lastLastOutbound = "";
+
 	public String getText(String phonenum, String txtmsg) {
 		String txtMsgLowercase = txtmsg.toLowerCase();
-		User currentUser = new User("1");
-		String toReturn = "No Response";
-		if(userMap.containsKey(phonenum)) {
+
+		if (userMap.containsKey(phonenum)) {
+			// Load useful info to Strings
 			currentUser = userMap.get(phonenum);
+			lastInbound = currentUser.getLastRecived();
+			lastOutbound = currentUser.getLastSent();
+			lastLastInbound = currentUser.getLastLastIndound();
+			lastLastOutbound = currentUser.getLastLastOutbound();
+			phonenum = currentUser.getNumber();
+			name = currentUser.getName();
 		}
-		if(newUser(phonenum)){
+		
+		String intro = "Welcome to textedu, the SMS based quiz game. To get started, reply with your desired username. Make sure it's fewer than 15 characters.";
+		if (newUser(phonenum)) {
 			userMap.put(phonenum, new User(phonenum));
-			toReturn = "Intro. Pick a username";
+			toReturn = intro;
 		}
-		//If the user has no name but exists, they must be responding with their desired name
-		else if(currentUser.getName().equalsIgnoreCase("NewUser")) {
-			if(uniqueName(txtmsg)) {
+		// If the user has no name but exists, they must be responding with
+		// their desired name
+		else if (currentUser.getName().equalsIgnoreCase("NewUser")) {
+			if (uniqueName(txtmsg) && txtmsg.length() < 16) {
 				currentUser.setName(txtmsg);
-				toReturn = (txtmsg + ", welcome to textedu. Instructions.");
+				toReturn = "Hi "
+						+ name
+						+ "! Quiz questions will be sent one by one, only sending the next after you respond. Reply with ? or HELP for instructions.";
+			} else {
+				toReturn = (txtmsg + " is taken. Please choose another username. It should be 15 characters or fewer.");
 			}
-			else {
-				toReturn = (txtmsg + " is taken. Please choose another username.");
-			}
+		} else if (txtmsg.equalsIgnoreCase("?")
+				|| txtmsg.equalsIgnoreCase("help")) {
+			toReturn = "Reply with a number or multiple numbers to recieve help\n1 - View All\n2 - Quizzes\n3 - Points\n4 - Change Username";
 		}
-		else if(txtmsg.equalsIgnoreCase("?") || txtmsg.equalsIgnoreCase("help")) {
-			toReturn = (getHelp());
+
+		// NEED TO EXPAND: points msg always respond with all points
+		else if (txtMsgLowercase.contains("points")) {
+			toReturn = currentUser.getPoints().toString();
 		}
-		//NEED TO EXPAND: points msg always respond with all points
-		else if(txtMsgLowercase.contains("points")) {
-			toReturn =  currentUser.getPoints().toString();
-		}
-		//Add sent and recieved texts to user arraylist
+		// Add sent and recieved texts to user arraylist
 		currentUser.newInbound(txtmsg);
 		currentUser.newOutbound(toReturn);
 		return toReturn;
-		}
+		
+	}
 
-	private static boolean newUser(String number) {
+	private boolean newUser(String number) {
 		if (userMap.containsKey(number)) {
 			return false;
 		}
 		return true;
 	}
+
 	private static String getHelp() {
 		return "Instructions.";
 	}
-	
-	private static boolean uniqueName(String name) {
-		//Iterate through all users, check if the name is taken
-		java.util.Iterator<Entry<String, User>> iterator = userMap.entrySet().iterator() ;
-        while(iterator.hasNext()){
-           Entry<String, User> temp = iterator.next();
-           User current = temp.getValue();
-           if(current.getName().equalsIgnoreCase(name)) {
-        	  return false;
-           }
-        }
-        return true;
+
+	private boolean uniqueName(String name) {
+		// Iterate through all users, check if the name is taken
+		java.util.Iterator<Entry<String, User>> iterator = userMap.entrySet()
+				.iterator();
+		while (iterator.hasNext()) {
+			Entry<String, User> temp = iterator.next();
+			User current = temp.getValue();
+			if (current.getName().equalsIgnoreCase(name)) {
+				return false;
+			}
+		}
+		return true;
 	}
+
 	public void insertUser(User toAdd) {
 		userMap.put(toAdd.getNumber(), toAdd);
 	}
