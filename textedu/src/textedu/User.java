@@ -15,12 +15,11 @@ public class User implements java.io.Serializable {
 	public ArrayList<String> outbound = new ArrayList<String>();
 	boolean changedSinceLastSave = true;
 	private String lastSave = "none";
-	// Holds users points, each spot being a different category.
-	// Points awarded based on how you score on a quiz
-	// The 0th index is their total points
 	private int points = 0;
 	private int level = 0;
 	public boolean hasHighScore;
+	public boolean hasActiveQuiz;
+	public Quiz activeQuiz;
 	
 	// private currentQuiz = new Quiz
 	public User(String num) {

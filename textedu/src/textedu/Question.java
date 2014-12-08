@@ -35,7 +35,7 @@ public class Question{
 	
 	public String toString(){
 		String toReturn = prompt;
-		toReturn += "a. " + answers.get(0) + "\n";
+		toReturn += "\na. " + answers.get(0) + "\n";
 		toReturn += "b. " + answers.get(1) + "\n";
 		toReturn += "c. " + answers.get(2) + "\n";
 		toReturn += "d. " + answers.get(3);

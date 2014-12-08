@@ -11,7 +11,7 @@ public class Quiz {
 	
 	public Quiz(){
 		score = 0;
-		currQuestion = 1;
+		currQuestion = 0;
 		finished = false;
 		questionList = new ArrayList<Question>();
 	}
