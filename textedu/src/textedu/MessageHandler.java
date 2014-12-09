@@ -53,7 +53,7 @@ public class MessageHandler {
 				currentUser.setName(origtxt);
 				toReturn = "Hi "
 						+ txtmsg
-						+ "! Quiz questions will be sent one by one, only sending the next after you respond. Reply with ? or HELP for instructions. Text the words MATH or GEOGRAPHY to get started.";
+						+ "! Reply with ? or HELP for instructions. Reply with MATH or GEOGRAPHY for a quiz.";
 			} else {
 				if (!uniqueName(txtmsg))
 					toReturn = (txtmsg + " is taken. Please choose another username. It should be 15 characters or fewer.");
@@ -63,7 +63,7 @@ public class MessageHandler {
 			}
 		} else if (txtmsg.equalsIgnoreCase("?")
 				|| txtmsg.equalsIgnoreCase("help")) {
-			toReturn = "Reply with a number or multiple numbers to recieve help\n1 - View All\n2 - Quizzes\n3 - Points\n4 - Change Username";
+			toReturn = "For a quiz, reply with MATH or GEOGRAPHY. To view your score, reply with SCORE.";
 		} else if (txtmsg.contains("math")){
 			currentUser.hasActiveQuiz = true;
 			currentUser.activeQuiz = qHand.createQuiz("math");
@@ -76,8 +76,7 @@ public class MessageHandler {
 		// NEED TO EXPAND: points msg always respond with all points
 		else if (txtmsg.contains("point") || txtmsg.contains("level")
 				|| txtmsg.contains("score")) {
-			toReturn = "You: " + currentUser.getPoints() + "\n"
-					+ highScores.toString();
+			toReturn = "Congratulations " + name + " you have " + currentUser.getPoints() + " points!";
 		}
 		// Add sent and recieved texts to user arraylist
 		currentUser.newInbound(txtmsg);
@@ -91,10 +90,6 @@ public class MessageHandler {
 			return false;
 		}
 		return true;
-	}
-
-	private static String getHelp() {
-		return "Instructions.";
 	}
 
 	private boolean uniqueName(String name) {
