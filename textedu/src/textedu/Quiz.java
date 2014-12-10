@@ -29,8 +29,12 @@ public class Quiz {
 		if(currQuestion == numQuestions)
 			finished = true;
 		
-		if(result)
-			score++; //have not implemented bonus
+		if(result){
+			score++;
+			if(score == 4) {
+				score+=1;
+			}
+		}
 		else{
 			//TODO if wrong
 		}
