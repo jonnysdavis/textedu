@@ -66,7 +66,6 @@ public class Mathematics extends Subject {
 				choices.add(Integer.toString(incorrectAns));
 			}
 		}
-
 		Random generator = new Random();
 		int i = generator.nextInt(3);
 		choices.add(i, Integer.toString(ans));
