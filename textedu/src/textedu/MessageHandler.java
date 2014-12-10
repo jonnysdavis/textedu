@@ -21,7 +21,7 @@ public class MessageHandler {
 	public String getText(String phonenum, String txtmsg) {
 		String origtxt = new String(txtmsg);
 		txtmsg = txtmsg.toLowerCase();
-		toReturn = "No Response.";
+		toReturn = "Whoops, that didn't make sense. Reply with a ? for help.";
 		if (userMap.containsKey(phonenum)) {
 			// Load useful info to Strings
 			currentUser = userMap.get(phonenum);
@@ -53,7 +53,7 @@ public class MessageHandler {
 				currentUser.setName(origtxt);
 				toReturn = "Hi "
 						+ txtmsg
-						+ "! Reply with ? or HELP for instructions. Reply with MATH or GEOGRAPHY for a quiz.";
+						+ "! Reply with ? for instructions. Reply with MATH or GEOGRAPHY for a quiz.";
 			} else {
 				if (!uniqueName(txtmsg))
 					toReturn = (txtmsg + " is taken. Please choose another username. It should be 15 characters or fewer.");
