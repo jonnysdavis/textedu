@@ -61,7 +61,7 @@ public class LeaderBoard {
 		if (userScores.size() < sizeTo) {
 			sizeTo = userScores.size();
 		}
-		top += "Top sizeTo Scores:\n";
+		top += "Top " + sizeTo + " Scores:\n";
 		for (int i = 1; i <= sizeTo; i++) {
 			top += userScores.get(i-1).getName() + " " + userScores.get(i-1).getScore() + "\n";
 		}
