@@ -43,6 +43,7 @@ public class MessageHandler {
 			if (current.isFinished()) {
 				currentUser.hasActiveQuiz = false;
 				currentUser.addPoints(current.score);
+				highScores.updateUsers(currentUser);
 			}
 		}
 		// If the user has no name but exists, they must be responding with
@@ -63,26 +64,47 @@ public class MessageHandler {
 			}
 		} else if (txtmsg.equalsIgnoreCase("?")
 				|| txtmsg.equalsIgnoreCase("help")) {
-			toReturn = "For a quiz, reply with MATH or GEOGRAPHY. To view your score, reply with SCORE.";
-		} else if (txtmsg.contains("math")){
-			currentUser.hasActiveQuiz = true;
-			currentUser.activeQuiz = qHand.createQuiz("math");
+			toReturn = "For a quiz, reply with MATH or GEOGRAPHY. To view your rank, reply with RANK.  To see the top scores, reply with TOP.";
+		} else if (txtmsg.contains("challenge")) {
+			String[] splited = txtmsg.split("\\s+");
+			// The first word was challenge and the username has been used but
+			// isnt himself
+			if (splited[0].equalsIgnoreCase("challenge")
+					&& !uniqueName(splited[1])
+					&& (!splited[1].equalsIgnoreCase(currentUser.getName()))) {
+
+			}
+		} else if (txtmsg.contains("math")) {
 			toReturn = currentUser.activeQuiz.questionList.get(0).toString();
-		} else if (txtmsg.contains("geo")){
-			currentUser.hasActiveQuiz = true;
-			currentUser.activeQuiz = qHand.createQuiz("geo");
+		} else if (txtmsg.contains("geo")) {
 			toReturn = currentUser.activeQuiz.questionList.get(0).toString();
 		}
 		// NEED TO EXPAND: points msg always respond with all points
 		else if (txtmsg.contains("point") || txtmsg.contains("level")
-				|| txtmsg.contains("score")) {
-			toReturn = "Congratulations " + name + " you have " + currentUser.getPoints() + " points!";
+				|| txtmsg.contains("score") || txtmsg.contains("rank")) {
+			toReturn = "Congratulations " + name + " you have "
+					+ currentUser.getPoints() + " points!";
+		}
+		else if(txtmsg.contains("top")) {
+			toReturn = highScores.getRank(currentUser);
 		}
 		// Add sent and recieved texts to user arraylist
 		currentUser.newInbound(txtmsg);
 		currentUser.newOutbound(toReturn);
 		return toReturn;
 
+	}
+
+	public Quiz getQuiz(String topic) {
+		Quiz temp = new Quiz();
+		if (topic.contains("math")) {
+			currentUser.hasActiveQuiz = true;
+			temp = qHand.createQuiz("math");
+		} else if (topic.contains("geo")) {
+			currentUser.hasActiveQuiz = true;
+			temp = qHand.createQuiz("geo");
+		}
+		return temp;
 	}
 
 	private boolean newUser(String number) {

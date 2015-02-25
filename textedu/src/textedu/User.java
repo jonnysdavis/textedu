@@ -20,6 +20,7 @@ public class User implements java.io.Serializable {
 	public boolean hasHighScore;
 	public boolean hasActiveQuiz;
 	public Quiz activeQuiz;
+	public ArrayList<QuizChallenge> challenges = new ArrayList<QuizChallenge>();
 	
 	// private currentQuiz = new Quiz
 	public User(String num) {
