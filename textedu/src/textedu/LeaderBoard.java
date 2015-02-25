@@ -1,67 +1,106 @@
 package textedu;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map.Entry;
+import java.util.Set;
 
 public class LeaderBoard {
-	List<User> topScores = new ArrayList<User>();
-
-	public LeaderBoard(HashMap<String, User> userMap) {
-		// Creates the leaderboard from a userMap
-		java.util.Iterator<Entry<String, User>> iterator = userMap.entrySet()
-				.iterator();
-		while (iterator.hasNext()) {
-			Entry<String, User> temp = iterator.next();
-			User current = temp.getValue();
-			int userPoints = current.getPoints();
-			for (int x = 0; x < topScores.size(); x++) {
-				if (userPoints > topScores.get(x).getPoints()) {
-					topScores.add(current);
-					topScores = sortByScore(topScores);
-				}
-			}
-		}
-
-	}
+	
+	ArrayList<SimpleUser> userScores = new ArrayList<SimpleUser>();
 	
 	public LeaderBoard() {
-		// TODO Auto-generated constructor stub
+		
 	}
 	
-	private boolean addScore(User toAdd) { //NOT COMPLETE
-		if(topScores.size() < 5 && (!topScores.contains(toAdd))) {
-			topScores.add(toAdd);
-			return true;
-		}
-		return false;
+	private void addUser(User u) {
+		userScores.add(new SimpleUser(u));
+		Collections.sort((List<SimpleUser>) userScores);
 	}
-	private List<User> sortByScore(List<User> topScores2) {
-		// Bubble sort on the arraylist of scores
-		for (int x = 0; x < topScores2.size(); x++) {
-			for (int y = 1; y < topScores2.size() - 1; y++) {
-				if (topScores2.get(y - 1).getPoints() > topScores2.get(y)
-						.getPoints()) {
-					User temp = topScores2.get(y - 1);
-					topScores2.set(y - 1, topScores2.get(y));
-					topScores2.set(y, temp);
-				}
+	
+	public void updateUsers(User u) {
+		SimpleUser su = new SimpleUser(u);
+		if (!userScores.contains(su)) {
+			addUser(u);
+		} else {
+			userScores.remove(su);
+			userScores.add(su);
+		}
+		Collections.sort((List<SimpleUser>) userScores);
+	} 
+	
+	public int getRank(User u) {
+		int index = -1;
+		for (int i = 0; i < userScores.size(); i++) {
+			if (userScores.get(i).equals(u)) {
+				return i + 1;
 			}
 		}
-		if (topScores2.size() > 5)
-			topScores2 = topScores2.subList(0, 5);
-		return topScores2;
+		
+		return index;
 	}
 	
-	public String toString() {
-		String board = "";
-		int y = 1;
-		for(User x : topScores) {
-			board+=y + ". " + x.getName() + ": " + x.getPoints() + "\n";
-			y++;
-		}
-		return board;
+	public int getNumUsersInLeaderboard() {
+		return userScores.size();
 	}
+	
+	
+	public String getTopScores() {
+		String top = "";
+		int sizeTo = 10;
+		if (userScores.size() < 10) {
+			sizeTo = userScores.size();
+		}
+		for (int i = 1; i <= sizeTo; i++) {
+			top += "Rank: " + i + " Name: " + userScores.get(i-1).getName() + " Score: " + userScores.get(i-1).getScore() + "\n";
+		}
+		
+		return top;
+	}
+	
+	
+	private class SimpleUser implements Comparable {
+		private String name;
+		private int score;
+		
+		public SimpleUser(User u) {
+			name = u.getName();
+			score = u.getPoints();
+		}
+		
+		public String getName() {
+			return name;
+		}
+		
+		public int getScore() {
+			return score;
+		}
+		
+		public boolean equals(User u) {
+			if (name.equalsIgnoreCase(u.getName())) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+		
+		public boolean equals(SimpleUser u) {
+			if (name.equalsIgnoreCase(u.getName())) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+
+		public int compareTo(Object o) {
+			SimpleUser other = (SimpleUser) o;
+			return ((Integer) other.getScore()).compareTo((Integer) score);
+		}
+	}
+	
+	
 }
