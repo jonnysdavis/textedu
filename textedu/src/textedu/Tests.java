@@ -41,4 +41,33 @@ public class Tests {
 		demo.getText("2", "sarah");
 		return demo;
 	}
+	public MessageHandler basicUserBaseWithScores() {
+		MessageHandler demo = new MessageHandler();
+		demo.getText("1", "jonny");
+		demo.getText("1", "jonny");
+		demo.getText("2", "sarah");
+		demo.getText("2", "sarah");
+		demo.getText("3", "jake");
+		demo.getText("3", "jake");
+		demo.getText("4", "nate");
+		demo.getText("4", "nate");
+		demo.getText("5", "fred");
+		demo.getText("5", "fred");
+		demo.getText("6", "alex");
+		demo.getText("6", "alex");
+		//do 100 quizzes for each user
+		int count = 0;
+		while(count<5) {
+			for(int x = 0; x<100; x++) {
+				demo.getText(Integer.toString(count), "math");
+				for(int y = 0; y<4; y++) {
+					demo.getText(Integer.toString(count), "a");
+				}
+				
+			}
+			count++;
+		}
+		return demo;
+	}
+	
 }

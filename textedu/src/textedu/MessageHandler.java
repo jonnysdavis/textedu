@@ -75,18 +75,19 @@ public class MessageHandler {
 
 			}
 		} else if (txtmsg.contains("math")) {
+			currentUser.activeQuiz = getQuiz("math");
 			toReturn = currentUser.activeQuiz.questionList.get(0).toString();
 		} else if (txtmsg.contains("geo")) {
+			currentUser.activeQuiz = getQuiz("geo");
 			toReturn = currentUser.activeQuiz.questionList.get(0).toString();
 		}
 		// NEED TO EXPAND: points msg always respond with all points
 		else if (txtmsg.contains("point") || txtmsg.contains("level")
 				|| txtmsg.contains("score") || txtmsg.contains("rank")) {
-			toReturn = "Congratulations " + name + " you have "
-					+ currentUser.getPoints() + " points!";
+			toReturn = highScores.getRank(currentUser);
 		}
 		else if(txtmsg.contains("top")) {
-			toReturn = highScores.getRank(currentUser);
+			toReturn = highScores.getTopScores();
 		}
 		// Add sent and recieved texts to user arraylist
 		currentUser.newInbound(txtmsg);
