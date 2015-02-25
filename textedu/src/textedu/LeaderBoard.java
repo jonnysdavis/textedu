@@ -33,15 +33,20 @@ public class LeaderBoard {
 		Collections.sort((List<SimpleUser>) userScores);
 	} 
 	
-	public int getRank(User u) {
-		int index = -1;
+	public String getRank(User u) {
+		String toReturn = "";
 		for (int i = 0; i < userScores.size(); i++) {
 			if (userScores.get(i).equals(u)) {
-				return i + 1;
+				int rank = i + 1;
+				int rankPrev = i;
+				if (rankPrev == 0) {
+					toReturn += "Rank: " + rankPrev + " " + userScores.get(i).getName() + " " + userScores.get(i).getScore();
+				}
+				toReturn += "Rank: " + rank + " " + userScores.get(i).getName() + " " + userScores.get(i).getScore();
 			}
 		}
 		
-		return index;
+		return toReturn;
 	}
 	
 	public int getNumUsersInLeaderboard() {
@@ -51,12 +56,13 @@ public class LeaderBoard {
 	
 	public String getTopScores() {
 		String top = "";
-		int sizeTo = 10;
-		if (userScores.size() < 10) {
+		int sizeTo = 5;
+		if (userScores.size() < sizeTo) {
 			sizeTo = userScores.size();
 		}
+		top += "Top sizeTo Scores:\n";
 		for (int i = 1; i <= sizeTo; i++) {
-			top += "Rank: " + i + " Name: " + userScores.get(i-1).getName() + " Score: " + userScores.get(i-1).getScore() + "\n";
+			top += userScores.get(i-1).getName() + " " + userScores.get(i-1).getScore() + "\n";
 		}
 		
 		return top;
