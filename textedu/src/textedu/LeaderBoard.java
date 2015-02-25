@@ -39,8 +39,9 @@ public class LeaderBoard {
 			if (userScores.get(i).equals(u)) {
 				int rank = i + 1;
 				int rankPrev = i;
+				
 				if (rankPrev == 0) {
-					toReturn += "Rank: " + rankPrev + " " + userScores.get(i).getName() + " " + userScores.get(i).getScore();
+					toReturn += "Rank: " + rankPrev + " " + userScores.get(i-1).getName() + " " + userScores.get(i-1).getScore() + "\n";
 				}
 				toReturn += "Rank: " + rank + " " + userScores.get(i).getName() + " " + userScores.get(i).getScore();
 			}
