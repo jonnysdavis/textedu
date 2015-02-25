@@ -81,7 +81,7 @@ public class MessageHandler {
 			currentUser.activeQuiz = getQuiz("geo");
 			toReturn = currentUser.activeQuiz.questionList.get(0).toString();
 		}
-		// NEED TO EXPAND: points msg always respond with all points
+		//NEED TO EXPAND: points msg always respond with all points
 		else if (txtmsg.contains("point") || txtmsg.contains("level")
 				|| txtmsg.contains("score") || txtmsg.contains("rank")) {
 			toReturn = highScores.getRank(currentUser);

@@ -57,7 +57,7 @@ public class Tests {
 		demo.getText("6", "alex");
 		//do 100 quizzes for each user
 		int count = 0;
-		while(count<5) {
+		while (count<5) {
 			for(int x = 0; x<100; x++) {
 				demo.getText(Integer.toString(count), "math");
 				for(int y = 0; y<4; y++) {
